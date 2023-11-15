@@ -1,12 +1,18 @@
 class Vehicle{
     constructor(x,y){
+      this.x=x;
+      this.y=y;
         this.pos = createVector(x,y);
         this.vel = createVector(0,0);
         this.acc = createVector(0,0);
-        this.r =40;
-        this.maxspeed=10;
-        this.maxforce = 1;
+        this.r =random(20,40);
+        this.maxspeed=random(1,10);
+        this.maxforce = 0.1;
 
+    }
+
+    hitbox(){
+      
     }
 
     show(){
@@ -49,4 +55,12 @@ class Vehicle{
           this.pos.y = height + this.r;
         }
       }
+
+  collision(px,py){
+    let d = dist(px,py,this.pos.x,this.pos.y);
+    
+    if(d<30){
+      print("lost")
+    }
+  }
 }
