@@ -5,13 +5,14 @@ let posx;
 let posy;
 let p;
 let n;
+let currentpoints;
 let spawntimer = 0;
 function setup() {
   click = 1;
   createCanvas(windowWidth,windowHeight);
  posx = 400;
  posy=400;
-
+currentpoints=0;
  
 
 }
@@ -25,17 +26,24 @@ function draw() {
   circle(target.x,target.y,32);
   pop();
 
+  textSize(50);
+  text(currentpoints,windowWidth/2,200)
 
-//for(let k = 0;k<5;k++){
-     // n = new Points(random(0,windowWidth),random(0,windowHeight/4));
-     // points.push(n);
-     // points[k].show();
 
-  //  //}
-  n = new Points(random(0,windowWidth),random(0,windowHeight));
- points.push(n);
- points[0].show();
- points[0].collision(target.x,target.y);
+for(let k = 0;k<1;k++){
+      n = new Points(random(0,windowWidth),random(0,windowHeight));
+      points.push(n);
+      points[k].show();
+      if (points[k].collision(target.x,target.y)===true){
+        points.splice(0,1);
+        currentpoints++;
+      }
+
+    }
+  //n = new Points(random(0,windowWidth),random(0,windowHeight));
+  //points.push(n);
+  //points[0].show();
+  //points[0].collision(target.x,target.y);
  
  
 
