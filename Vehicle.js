@@ -6,7 +6,7 @@ class Vehicle{
         this.vel = createVector(0,0);
         this.acc = createVector(0,0);
         this.r =random(20,40);
-        this.maxspeed=random(1,10);
+        this.maxspeed=random(1,20);
         this.maxforce = 0.1;
 
     }
@@ -16,9 +16,10 @@ class Vehicle{
     }
 
     show(){
+        push();
         stroke(255);
         strokeWeight(4);
-        push();
+        
         translate(this.pos.x,this.pos.y);
         rotate(this.vel.heading());
         triangle(-this.r, -this.r / 2, -this.r, this.r / 2, this.r, 0);
@@ -60,7 +61,10 @@ class Vehicle{
     let d = dist(px,py,this.pos.x,this.pos.y);
     
     if(d<30){
-      print("lost")
+      textSize(300);
+      textAlign(CENTER);
+      text("You Lost!",windowWidth/2,windowHeight/2)
+      noLoop();
     }
   }
 }
