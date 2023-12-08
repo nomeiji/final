@@ -1,10 +1,16 @@
 
 let enemies = [];
 let points = [];
+let blocks = [];
+let fleepoi = [];
 let posx;
 let posy;
 let p;
 let n;
+let b;
+let o;
+let clock;
+let min;
 let currentpoints;
 let spawntimer = 0;
 function setup() {
@@ -13,7 +19,8 @@ function setup() {
  posx = 400;
  posy=400;
 currentpoints=0;
- 
+ clock = 0;
+ min=0;
 
 }
 
@@ -24,10 +31,57 @@ function draw() {
   noStroke();
   target = createVector(posx,posy);
   circle(target.x,target.y,32);
+  if (frameCount % 60 == 0) {
+    clock++;
+    if(clock ===60){
+      clock = 0;
+      min++;
+    }
+  }
+  pop();
+  push();
+  textSize(50);
+  fill(0);
+  text('Time:',windowWidth/2-180,96)
+  text(':',windowWidth/2-13,96);
+  text(min,windowWidth/2-40,100);
+  text(clock,windowWidth/2,100);
+  
+  textSize(50);
+  text(currentpoints,windowWidth/2-20,200)
   pop();
 
-  textSize(50);
-  text(currentpoints,windowWidth/2,200)
+  for(let f = 0;f<1;f++){
+    o = new Fleepoints(random(windowWidth/2-400,windowWidth/2+400),random(windowHeight/2-400,windowHeight/2+400))
+    fleepoi.push(o);
+    let steering = fleepoi[f].flee(target);
+    fleepoi[f].applyForce(steering);
+    fleepoi[f].edges(); 
+    fleepoi[f].update();
+    fleepoi[f].show();
+    if(fleepoi[f].collision(target.x,target.y)){
+    fleepoi.splice(0,1);
+    currentpoints = currentpoints+5;
+  }
+  }
+  
+
+  for(let v = 0;v<5;v++){
+  b = new boxes();
+  blocks.push(b);
+  blocks[v].show();
+
+  if(blocks[v].collision(target.x,target.y)===true){
+    posx=posx-10;
+  }
+
+ 
+
+  if(blocks[v].move()===true){
+    blocks.splice(0,1);
+  }
+}
+  
 
 
 for(let k = 0;k<1;k++){
@@ -40,12 +94,9 @@ for(let k = 0;k<1;k++){
       }
 
     }
-  //n = new Points(random(0,windowWidth),random(0,windowHeight));
-  //points.push(n);
-  //points[0].show();
-  //points[0].collision(target.x,target.y);
+
  
- 
+
 
   if (millis() >= 10000+spawntimer) {
     for(let i = 0;i<5;i++){
@@ -59,7 +110,7 @@ for(let k = 0;k<1;k++){
    enemies[l].show();
    enemies[l].seek(target);
    enemies[l].update();
-   enemies[l].collision(target.x,target.y);
+   enemies[l].collision(target.x,target.y,currentpoints,min,clock);
   }
   movement();
 }
