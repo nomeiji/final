@@ -16,7 +16,7 @@ let spawntimer = 0;
 function setup() {
   click = 1;
   var canvas =createCanvas(windowWidth-100,windowHeight-200);
-  //canvas.parent("potrait");
+  //canvas.parent("portrait");
  posx = 400;
  posy=400;
 currentpoints=0;
